@@ -23,4 +23,15 @@ namespace Refactoring.Models
 
         public virtual DbSet<Item> Items { get; set; }
     }
+
+    public class ShopDbContext : DbContext, IShopContext
+    {
+        public ShopDbContext()
+            : base("DefaultConnection")
+        {
+        }
+
+        
+        public virtual DbSet<Item> Items { get; set; }
+    }
 }

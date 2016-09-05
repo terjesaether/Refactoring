@@ -34,21 +34,21 @@ namespace Refactoring.Data
         public Item Add(Item item)
         {
             _db.Items.Add(item);
-            _db.SaveChanges();
+            //_db.SaveChanges();
             return item;
         }
 
         public void Update(Item item)
         {
             _db.Entry(item).State = EntityState.Modified;
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
         public void Delete(int id)
         {
             var item = _db.Items.Find(id);
             _db.Items.Remove(item);
-            _db.SaveChanges();
+            //_db.SaveChanges();
         }
 
         public void Dispose()

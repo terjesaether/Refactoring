@@ -9,15 +9,18 @@ namespace Refactoring.Controllers
     {
 
         private readonly IItemsRepository _repo;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ItemsController()
-        {
-            _repo = new ItemsRepository(new ApplicationDbContext());
-        }
 
-        public ItemsController(IItemsRepository repository) // Brukes hvis man skal teste
+        //public ItemsController()
+        //{
+        //    _repo = new ItemsRepository(new ApplicationDbContext());
+        //}
+
+        public ItemsController(IItemsRepository repository, IUnitOfWork unitOfWork) // Brukes hvis man skal teste
         {
             _repo = repository;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Items
@@ -59,6 +62,7 @@ namespace Refactoring.Controllers
             if (!ModelState.IsValid) return View(item);
 
             _repo.Add(item);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
 
@@ -89,6 +93,7 @@ namespace Refactoring.Controllers
             if (!ModelState.IsValid) return View(item);
 
             _repo.Update(item);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
 
@@ -116,6 +121,7 @@ namespace Refactoring.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             _repo.Delete(id);
+            _unitOfWork.Commit();
 
             return RedirectToAction("Index");
         }
